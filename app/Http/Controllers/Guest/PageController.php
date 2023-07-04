@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\comic;
 
 
+
 class PageController extends Controller
 {
     /**
@@ -16,7 +17,9 @@ class PageController extends Controller
      */
     public function index()
     {
-        //
+        $comics = Comic::all();
+
+        return view('comic.index', compact('comics'));
     }
 
     /**
@@ -26,7 +29,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        //
+        return ('comic.create');
     }
 
     /**
@@ -37,7 +40,6 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -46,9 +48,9 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(comic $comic)
     {
-        //
+        return view('comic.show', compact('comic'));
     }
 
     /**
