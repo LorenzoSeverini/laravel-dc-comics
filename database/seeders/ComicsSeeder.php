@@ -19,14 +19,14 @@ class ComicsSeeder extends Seeder
         foreach ($comics as $comicData) {
             $comic = new Comic();
             $comic->title = $comicData['title'];
-            $comic->description = substr($comicData['description'], 0, 255); // Truncate the description to 255 characters
-            $comic->thumb = substr($comicData['thumb'], 0, 255); // Truncate the thumb value to 255 characters
+            $comic->description = $comicData['description'];
+            $comic->thumb = $comicData['thumb'];
             $comic->price =  $comicData['price'];
             $comic->series = $comicData['series'];
             $comic->sale_date = $comicData['sale_date'];
             $comic->type = $comicData['type'];
-            $comic->artists = implode(', ', $comicData['artists']); // Convert array to string
-            $comic->writers = implode(', ', $comicData['writers']); // Convert array to string
+            $comic->artists = implode(', ', $comicData['artists']);
+            $comic->writers = implode(', ', $comicData['writers']);
             $comic->save();
         }
     }
