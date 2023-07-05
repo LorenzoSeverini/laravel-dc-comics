@@ -2,7 +2,15 @@
 @section('page-title', 'Details')
 @section('content')
 <div class="container my-3">
-    <h1>Other Page</h1>
+    <h1>Comic</h1>
+    {{-- link to edit comic  --}}
+    <a href="{{ route('comic.edit', $comic->id) }}" class="btn btn-primary">Edit Comic</a>
+    {{-- link to delete comic --}}
+    <form action="{{ route('comic.destroy', $comic->id) }}" method="POST" class="d-inline-block">
+        @csrf
+        @method('DELETE')
+        <input type="submit" value="Delete Comic" data-comic-id="{{ $comic->id }}" id="deleteButton" class="btn btn-danger">
+    </form>
     <div class="row g-4">
         <div class="col">
             <div class="card">
