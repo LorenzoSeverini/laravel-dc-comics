@@ -5,6 +5,8 @@
 {{-- form to create a new comic  --}}
 <div class="container my-3">
     <h1>Create new Comic</h1>
+    {{-- link to go back to home page --}}
+    <a href="{{ route('home')}}">go back to home Page</a>
     <div class="row g-3 py-4">
         <div class="col">
             <form action="{{ route('comic.store') }}" method="POST">
@@ -63,8 +65,6 @@
             </form>
         </div>
     </div>
-    {{-- link to go back to home page --}}
-    <a href="{{ route('home')}}">go back to home Page</a>
 </div>
 
 @endsection
