@@ -29,7 +29,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        return ('comic.create');
+        return view('comic.create');
     }
 
     /**
@@ -40,6 +40,21 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
+        $comicData = $request->all();
+
+        $newComic = new Comic();
+        $newComic->title = $comicData['title'];
+        $newComic->description = $comicData['description'];
+        $newComic->thumb = $comicData['thumb'];
+        $newComic->price =  $comicData['price'];
+        $newComic->series = $comicData['series'];
+        $newComic->sale_date = $comicData['sale_date'];
+        $newComic->type = $comicData['type'];
+        $newComic->artists = is_array($comicData['artists']) ? implode(', ', $comicData['artists']) : '';
+        $newComic->writers = is_array($comicData['writers']) ? implode(', ', $comicData['writers']) : '';
+        $newComic->save();
+
+        return redirect()->route('comic.show', $newComic->id);
     }
 
     /**
