@@ -68,15 +68,22 @@ class PageController extends Controller
         return view('comic.show', compact('comic'));
     }
 
+    public function show_old_senza_dependecy_injection($id)
+    {
+        $comic = Comic::find($id);
+
+        return view('comic.show', compact('comic'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(comic $comic)
     {
-        //
+        return view('comic.edit', compact('comic'));
     }
 
     /**
@@ -86,9 +93,23 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, comic $comic)
     {
-        //
+
+        $comicData = $request->all();
+
+        $comic->title = $comicData['title'];
+        $comic->description = $comicData['description'];
+        $comic->thumb = $comicData['thumb'];
+        $comic->price =  $comicData['price'];
+        $comic->series = $comicData['series'];
+        $comic->sale_date = $comicData['sale_date'];
+        $comic->type = $comicData['type'];
+        $comic->artists = is_array($comicData['artists']) ? implode(', ', $comicData['artists']) : '';
+        $comic->writers = is_array($comicData['writers']) ? implode(', ', $comicData['writers']) : '';
+        $comic->update();
+
+        return redirect()->route('comic.show', ['comic' => $comic->id]);
     }
 
     /**
@@ -97,8 +118,10 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(comic $comic)
     {
-        //
+        $comic->delete();
+
+        return redirect()->route('comic.index');
     }
 }
