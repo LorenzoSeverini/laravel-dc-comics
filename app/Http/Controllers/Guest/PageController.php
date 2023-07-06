@@ -109,7 +109,7 @@ class PageController extends Controller
         $comic->writers = is_array($comicData['writers']) ? implode(', ', $comicData['writers']) : '';
         $comic->update();
 
-        return redirect()->route('comic.show', ['comic' => $comic->id]);
+        return redirect()->route('comic.show', $comic->id);
     }
 
     /**
