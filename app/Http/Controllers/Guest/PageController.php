@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreComicRequest;
+use App\Http\Requests\UpdateComicRequest;
 use App\Models\comic;
-
 
 
 class PageController extends Controller
@@ -18,7 +18,6 @@ class PageController extends Controller
     public function index()
     {
         $comics = Comic::all();
-
         return view('comic.index', compact('comics'));
     }
 
@@ -38,20 +37,12 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreComicRequest $request)
     {
-        $comicData = $request->all();
 
+        $comicData = $request->validated();
         $newComic = new Comic();
-        $newComic->title = $comicData['title'];
-        $newComic->description = $comicData['description'];
-        $newComic->thumb = $comicData['thumb'];
-        $newComic->price =  $comicData['price'];
-        $newComic->series = $comicData['series'];
-        $newComic->sale_date = $comicData['sale_date'];
-        $newComic->type = $comicData['type'];
-        $newComic->artists = is_array($comicData['artists']) ? implode(', ', $comicData['artists']) : '';
-        $newComic->writers = is_array($comicData['writers']) ? implode(', ', $comicData['writers']) : '';
+        $newComic->fill($comicData);
         $newComic->save();
 
         return redirect()->route('comic.show', $newComic->id);
@@ -71,7 +62,6 @@ class PageController extends Controller
     public function show_old_senza_dependecy_injection($id)
     {
         $comic = Comic::find($id);
-
         return view('comic.show', compact('comic'));
     }
 
@@ -93,23 +83,15 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, comic $comic)
+    public function update(UpdateComicRequest $request, Comic $comic)
     {
 
-        $comicData = $request->all();
-
-        $comic->title = $comicData['title'];
-        $comic->description = $comicData['description'];
-        $comic->thumb = $comicData['thumb'];
-        $comic->price =  $comicData['price'];
-        $comic->series = $comicData['series'];
-        $comic->sale_date = $comicData['sale_date'];
-        $comic->type = $comicData['type'];
-        $comic->artists = is_array($comicData['artists']) ? implode(', ', $comicData['artists']) : '';
-        $comic->writers = is_array($comicData['writers']) ? implode(', ', $comicData['writers']) : '';
+        $comicData = $request->validated();
+        $comic->fill($comicData);
         $comic->update();
 
-        return redirect()->route('comic.show', $comic->id);
+        // return redirect()->route('comic.show', $comic->id);
+        return to_route("comic.show", $comic);
     }
 
     /**
