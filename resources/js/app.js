@@ -14,29 +14,19 @@ import * as bootstrap from 'bootstrap'
 // import.meta.glob(['../img/**'])
 
 
-// const deleteButton = document.getElementById('deleteButton');
-// const comicId = deleteButton.getAttribute('data-comic-id');
+const deleteButton = document.getElementById('deleteButton');
 
-// deleteButton.addEventListener('click', function (e) {
-//     e.preventDefault();
+deleteButton.addEventListener('click', function (e) {
+    e.preventDefault();
 
-//     const confirmed = confirm('Are you sure you want to delete this Comic?');
+    const confirmed = confirm('Are you sure you want to delete this Comic?');
 
-//     if (confirmed) {
-//         fetch(route('comics.destroy', {comic: comicId}), {
-//             method: 'DELETE',
-//             headers: {
-//                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-//             }
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             if (data.deleted) {
-//                 window.location.href = route('home');
-//             } else {
-//                 alert('Something went wrong. Please try again.');
-//             }
-//         })
-//     }
-// });
+    if (confirmed) {
+        // Perform the deletion
+        const deleteForm = document.getElementById('deleteForm');
+        deleteForm.submit();
+    }
+});
+
+
 
